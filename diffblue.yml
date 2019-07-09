@@ -74,7 +74,7 @@ phases:
       # Instantiate classes using the simplest constructor strategy
       smart-harness: simplest-constructor-and-nondet
       # Only initialize numerical primitive-typed parameter within the given range
-      java-assume-inputs-interval: "[-999999:-2]"
+      java-assume-inputs-interval: "[-100:-2]"
   -
     # Phase 1 PRETTY AND COMPLEX - standard models only, pretty tests, do not test private methods directly, input factory
     timeout: 180

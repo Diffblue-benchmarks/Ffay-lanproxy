@@ -1,23 +1,14 @@
 package org.fengfei.lanproxy.common;
 
-import static org.mockito.AdditionalMatchers.or;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Matchers.isNull;
-
 import com.diffblue.deeptestutils.Reflector;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.Timeout;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.lang.reflect.InvocationTargetException;
 
-@RunWith(PowerMockRunner.class)
 public class LangUtilTest {
 
   @Rule public final ExpectedException thrown = ExpectedException.none();
@@ -26,22 +17,11 @@ public class LangUtilTest {
 
   /* testedClasses: LangUtil */
   // Test written by Diffblue Cover.
-
-  @Test
-  public void constructorOutputVoid() {
-
-    // Act, creating object to test constructor
-    final LangUtil objectUnderTest = new LangUtil();
-
-    // Method returns void, testing that no exception is thrown
-  }
-
-  // Test written by Diffblue Cover.
   @Test
   public void parseBooleanInputNotNullFalseOutputFalse() {
 
     // Arrange
-    final Boolean value = new Boolean(false);
+    final Object value = "2";
     final boolean defaultValue = false;
 
     // Act
@@ -52,19 +32,18 @@ public class LangUtilTest {
   }
 
   // Test written by Diffblue Cover.
-
   @Test
-  public void parseBooleanInputNotNullFalseOutputFalse2() {
+  public void parseBooleanInputNotNullFalseOutputTrue() {
 
     // Arrange
-    final Object value = "a/b/c";
+    final Boolean value = new Boolean(true);
     final boolean defaultValue = false;
 
     // Act
     final boolean actual = LangUtil.parseBoolean(value, defaultValue);
 
     // Assert result
-    Assert.assertFalse(actual);
+    Assert.assertTrue(actual);
   }
 
   // Test written by Diffblue Cover.
@@ -87,7 +66,7 @@ public class LangUtilTest {
   public void parseBooleanInputNotNullOutputFalse2() {
 
     // Arrange
-    final Object value = "1a 2b 3c";
+    final Object value = "\'";
 
     // Act
     final Boolean actual = LangUtil.parseBoolean(value);
@@ -127,31 +106,31 @@ public class LangUtilTest {
 
   // Test written by Diffblue Cover.
   @Test
-  public void parseDoubleInputNotNullNullOutputZero() {
+  public void parseDoubleInputNotNullNotNullOutputPositive() {
 
     // Arrange
-    final Double value = new Double(0.0);
-    final Double defaultValue = null;
+    final Double value = new Double(2.0);
+    final Double defaultValue = new Double(2.0);
 
     // Act
     final Double actual = LangUtil.parseDouble(value, defaultValue);
 
     // Assert result
-    Assert.assertEquals(0.0, actual, 0.0);
+    Assert.assertEquals(2.0, actual, 0.0);
   }
 
   // Test written by Diffblue Cover.
   @Test
-  public void parseDoubleInputNotNullOutputZero() {
+  public void parseDoubleInputNotNullOutputPositive() {
 
     // Arrange
-    final Double value = new Double(0.0);
+    final Double value = new Double(2.0);
 
     // Act
     final Double actual = LangUtil.parseDouble(value);
 
     // Assert result
-    Assert.assertEquals(0.0, actual, 0.0);
+    Assert.assertEquals(2.0, actual, 0.0);
   }
 
   // Test written by Diffblue Cover.
@@ -198,19 +177,33 @@ public class LangUtilTest {
   }
 
   // Test written by Diffblue Cover.
-
   @Test
   public void parseIntInputNotNullZeroOutputPositive() {
 
     // Arrange
-    final Object value = "1";
+    final Object value = "2";
     final Integer defaultValue = 0;
 
     // Act
     final Integer actual = LangUtil.parseInt(value, defaultValue);
 
     // Assert result
-    Assert.assertEquals(new Integer(1), actual);
+    Assert.assertEquals(new Integer(2), actual);
+  }
+
+  // Test written by Diffblue Cover.
+  @Test
+  public void parseIntInputNullNullOutputNull() {
+
+    // Arrange
+    final Object value = null;
+    final Integer defaultValue = null;
+
+    // Act
+    final Integer actual = LangUtil.parseInt(value, defaultValue);
+
+    // Assert result
+    Assert.assertNull(actual);
   }
 
   // Test written by Diffblue Cover.
@@ -229,21 +222,6 @@ public class LangUtilTest {
 
   // Test written by Diffblue Cover.
   @Test
-  public void parseIntInputNullZeroOutputZero() {
-
-    // Arrange
-    final Object value = null;
-    final Integer defaultValue = 0;
-
-    // Act
-    final Integer actual = LangUtil.parseInt(value, defaultValue);
-
-    // Assert result
-    Assert.assertEquals(new Integer(0), actual);
-  }
-
-  // Test written by Diffblue Cover.
-  @Test
   public void parseIntInputPositiveOutputPositive() {
 
     // Arrange
@@ -258,17 +236,48 @@ public class LangUtilTest {
 
   // Test written by Diffblue Cover.
   @Test
-  public void parseIntInputPositiveZeroOutputPositive() {
+  public void parseIntInputZeroZeroOutputZero() {
 
     // Arrange
-    final Object value = 1;
+    final Object value = 0;
     final Integer defaultValue = 0;
 
     // Act
     final Integer actual = LangUtil.parseInt(value, defaultValue);
 
     // Assert result
-    Assert.assertEquals(new Integer(1), actual);
+    Assert.assertEquals(new Integer(0), actual);
+  }
+
+  // Test written by Diffblue Cover.
+
+  @Test
+  public void parseLongInputNotNullNegativeOutputPositive() {
+
+    // Arrange
+    final Object value = "1";
+    final Long defaultValue = -100L;
+
+    // Act
+    final Long actual = LangUtil.parseLong(value, defaultValue);
+
+    // Assert result
+    Assert.assertEquals(new Long(1L), actual);
+  }
+
+  // Test written by Diffblue Cover.
+  @Test
+  public void parseLongInputNotNullNotNullOutputPositive() {
+
+    // Arrange
+    final Long value = new Long(476_164L);
+    final Long defaultValue = new Long(475_718L);
+
+    // Act
+    final Long actual = LangUtil.parseLong(value, defaultValue);
+
+    // Assert result
+    Assert.assertEquals(new Long(476_164L), actual);
   }
 
   // Test written by Diffblue Cover.
@@ -276,16 +285,17 @@ public class LangUtilTest {
   public void parseLongInputNotNullOutputPositive() {
 
     // Arrange
-    final Long value = new Long(6L);
+    final Long value = new Long(776L);
 
     // Act
     final Long actual = LangUtil.parseLong(value);
 
     // Assert result
-    Assert.assertEquals(new Long(6L), actual);
+    Assert.assertEquals(new Long(776L), actual);
   }
 
   // Test written by Diffblue Cover.
+
   @Test
   public void parseLongInputNotNullOutputPositive2() {
 
@@ -297,21 +307,6 @@ public class LangUtilTest {
 
     // Assert result
     Assert.assertEquals(new Long(3L), actual);
-  }
-
-  // Test written by Diffblue Cover.
-  @Test
-  public void parseLongInputNotNullZeroOutputPositive() {
-
-    // Arrange
-    final Object value = "2";
-    final Long defaultValue = 0L;
-
-    // Act
-    final Long actual = LangUtil.parseLong(value, defaultValue);
-
-    // Assert result
-    Assert.assertEquals(new Long(2L), actual);
   }
 
   // Test written by Diffblue Cover.
@@ -341,21 +336,6 @@ public class LangUtilTest {
 
     // Assert result
     Assert.assertNull(actual);
-  }
-
-  // Test written by Diffblue Cover.
-  @Test
-  public void parseLongInputPositiveZeroOutputPositive() {
-
-    // Arrange
-    final Object value = 1L;
-    final Long defaultValue = 0L;
-
-    // Act
-    final Long actual = LangUtil.parseLong(value, defaultValue);
-
-    // Assert result
-    Assert.assertEquals(new Long(1L), actual);
   }
 
   // Test written by Diffblue Cover.
